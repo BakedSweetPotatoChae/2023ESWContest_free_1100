@@ -3,9 +3,10 @@
 ![시작](https://github.com/BakedSweetPotatoChae/2023ESWContest_free_1100/assets/137213524/737594b2-7035-41da-8d5f-2816fb71914c)
 
 |팀장 김성윤|
-|HW PNG 채승병|
-|SW 이재훈|
+|----------|
 |기구 장일준|
 |기구 황나윤|
+|HW PNG 채승병|
+|SW 이재훈|
 |SW 황인우|
  <img src="https://img.shields.io/badge/Arduino-00878F?style=flat&logo=Arduino&logoColor=white"/><img src="https://img.shields.io/badge/unity-FFFFFF?style=flat&logo=unity&logoColor=white"/>
