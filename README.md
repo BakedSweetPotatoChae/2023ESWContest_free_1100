@@ -2,7 +2,7 @@
 **아두이노와 유니티를 사용해서 디지털 트윈위 적용하여 만든작품 입니다.**
 ![시작](https://github.com/BakedSweetPotatoChae/2023ESWContest_free_1100/assets/137213524/ecd5cca4-1dc8-4114-b039-369665b1f7bc)
 
-
+#팀원
 |팀장 | 김성윤|
 |-----|-----|
 |기구 | 장일준|
