@@ -401,7 +401,7 @@ void loop() {
             dxl.setGoalVelocity(4, 1224);
             dxl.setGoalVelocity(18, 200);
           }
-          //위 조건이 끝나는 즉시 모터의 움직임 종료(로테이션 모드의 특징)
+          //위 조건이 끝나는 즉시 모터의 움직임 종료
           dxl.setGoalVelocity(4, 0);
           dxl.setGoalVelocity(18, 0);
           delay(1000);
