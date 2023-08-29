@@ -1,0 +1,3 @@
+2023-05-30 PM 8:55:09 - [Exception] UnassignedReferenceException: The variable subCameras of MainCamera has not been assigned.
+You probably need to assign the subCameras variable of the MainCamera script in the inspector.
+2023-05-30 PM 8:55:10 - [Error] 파일 경로가 지정되어 있지 않습니다.

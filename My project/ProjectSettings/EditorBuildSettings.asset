@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/start.unity
+    guid: fb0cfdfb4e799264abd16340f7a1654d
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/control.unity
+    guid: 547c496ca095e2840a643174587d7d4e
+  - enabled: 1
+    path: Assets/Scenes/shihum.unity
+    guid: 1e0ae96c672bfcf418bef8a10d74e995
+  - enabled: 1
+    path: Assets/Scenes/Twin1.unity
+    guid: ad4293de168d5b9459f676ca06178389
+  - enabled: 1
+    path: Assets/Scenes/Twin2.unity
+    guid: 7793876538d934d42b038704072bc8df
+  - enabled: 1
+    path: Assets/Scenes/input2.unity
+    guid: 379c7344bb73c93458a1fcbe75df10a4
+  - enabled: 1
+    path: Assets/Scenes/output1.unity
+    guid: a9de80d929cf64d47bc58d48042c2449
+  - enabled: 1
+    path: Assets/Ardity/Scenes/DemoScene_UserPoll_ReadWrite.unity
+    guid: 483dfd9088375b94380a7c4999c98acb
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/2box.unity
+    guid: 55d55ec85f3a09443967979020de266a
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  m_configObjects: {}
