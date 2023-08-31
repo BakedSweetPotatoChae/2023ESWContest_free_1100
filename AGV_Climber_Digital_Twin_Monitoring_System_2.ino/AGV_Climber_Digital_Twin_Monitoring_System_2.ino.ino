@@ -1,18 +1,11 @@
 #include <Servo.h>
-
 #include <Dynamixel2Arduino.h>
 
-
 // 초음파를 사용하기 위한 아두이노 핀 위치 지정
-//
 #define echo 47
 #define trig 49
-
-
 #define echo_2 41
 #define trig_2 43
-
-
 #include <DFMobile.h>
 #include <DFRobot_HuskyLens.h>
 #include <HUSKYLENS.h>
@@ -22,7 +15,6 @@
 HUSKYLENS huskylens;
 
 void printResult(HUSKYLENSResult result);
-
 
 // Please modify it to suit your hardware.
 #if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
@@ -57,7 +49,6 @@ const int DXL_DIR_PIN = -1;
 const int DXL_DIR_PIN = 2;
 #endif
 
-
 const float DXL_PROTOCOL_VERSION = 1.0;
 
 Dynamixel2Arduino dxl(DXL_SERIAL, DXL_DIR_PIN);
@@ -75,6 +66,7 @@ int ultrasonic() {
   //그 후 거리 식으로 나온 값을 return
   return pulseIn(echo, HIGH) * 17 / 1000;
 }
+
 //뒤에있는 초음파 센서를 측정하기 위한 함수
 int ultrasonic_back() {
 
@@ -87,6 +79,7 @@ int ultrasonic_back() {
 
   return pulseIn(echo_2, HIGH) * 17 / 1000;
 }
+
 //모터를 속도모드로 변경
 void setting_OP_VELOCITY(int port) {
   //다이나믹셀 함수로 받은 AX-12A모터ID를 속도 모드로 변경
@@ -98,6 +91,7 @@ void setting_OP_VELOCITY(int port) {
   dxl.torqueOn(port);
   //AX-12모터를 ON
 }
+
 //모터를 포지션 모드로 변경
 void setting_OP_POSITION(int port) {
   //다이나믹셀 함수로 받은 AX-12A모터ID를 포지션 모드로 변경
@@ -109,34 +103,37 @@ void setting_OP_POSITION(int port) {
   dxl.torqueOn(port);
   //AX-12모터를 다시 ON
 }
-
-void motor_axis(int port, int target_degree,int axis_motor_speed,int port_2, int target_degree_2) {
-  int start_time_check = false;
-  int set_degree = target_degree;
+//port는 구동부에 축을 담당하는 모터의 ID를 말한다.
+//target_dergee는 port모터가 목표로 하는 각을 저장한다.
+//axis_motor_speed는 port모터가 목표로 하는 속도를 저장한다.
+//port_2는 구동부 바퀴를 담당하는 모터를 뜻 한다.
+//target_dergee_2는 port_2가 목표로 하는 스피드를 말한다.
+void motor_axis(int port, int target_degree,int axis_motor_speed,int port_2, int target_speed) {
+  //모터의 시작 상태를 false로 설정한다
   bool start_motor_check = false;
-  dxl.setGoalPosition(port, set_degree, UNIT_DEGREE);
+  //각각 입력받은 값을 설정하여 작동한다.
+  dxl.setGoalPosition(port, target_degree, UNIT_DEGREE);
   dxl.setGoalVelocity(port, axis_motor_speed);
-  dxl.setGoalVelocity(port_2, target_degree_2);
+  dxl.setGoalVelocity(port_2, target_speed);
   DEBUG_SERIAL.print("first position : ");
+  //시작 모터 각도를 출력한다
   DEBUG_SERIAL.println(dxl.getPresentPosition(port, UNIT_DEGREE));
-
   while (start_motor_check != true) {
-    if (set_degree-3 <= dxl.getPresentPosition(port, UNIT_DEGREE) && dxl.getPresentPosition(port, UNIT_DEGREE) <= set_degree+3) {
+    //목표 각도에 도달하면 delay(10) 후에 현 상태를 유지하고 있는 지 확인한다.
+    if (target_degree-3 <= dxl.getPresentPosition(port, UNIT_DEGREE) && dxl.getPresentPosition(port, UNIT_DEGREE) <= target_degree+3) {
       delay(10);
-      if (set_degree-3 <= dxl.getPresentPosition(port, UNIT_DEGREE) && dxl.getPresentPosition(port, UNIT_DEGREE) <= set_degree+3) {
+      if (target_degree-3 <= dxl.getPresentPosition(port, UNIT_DEGREE) && dxl.getPresentPosition(port, UNIT_DEGREE) <= target_degree+3) {
+        //그 후 while문을 탈출하기 위하 true로 변경하고 while문을 탈출한다.
         start_motor_check = true;
         DEBUG_SERIAL.println("check");
       }
     }
+    //그 후 완료를 알린다.
     DEBUG_SERIAL.println("position check");
     DEBUG_SERIAL.println(dxl.getPresentPosition(6, UNIT_DEGREE));
     delay(50);
   }
 }
-
-
-
-
 
 void setup() {
 
@@ -164,8 +161,6 @@ void setup() {
   }
   DEBUG_SERIAL.println("check");
 
-
-
   //사용할 모터의 포지션 설정
   setting_OP_POSITION(2);
   setting_OP_POSITION(6);
@@ -182,19 +177,12 @@ void setup() {
   Serial.println("cm");
 }
 
-
-
-
 int save_check_id = 0;
 int count = 0;
 bool end = 0;
 bool move_end_check = 0;
 int check_id[10];
-
-
 void loop() {
-
-
 
 
   //---------------------------------------------------------------------------------------------------
@@ -203,19 +191,12 @@ void loop() {
   //처음에 위로 올라가는 위치를 잡는 코드 미완성
 
   static bool right_setting_check = 0;
-
-
   static bool left_setting_check = 0;
-
   bool start_time_check = 0;
-
   long long int start_time = 0;
-
   int set_degree = 60;
 
   delay(1000);
-
-
   //로봇의 앞쪽 부분을 꺽어 바코드 쪽으로 갈 준비를 한다.
   //모터가 간혹 값이 튀어 위치에 도달했다고 인식하는 경우가 있다. 이를 해결하기 위해 도달할 경우 그 지점을 저장하고 10ms 뒤에 저장한 값과 현재 값을 비교하여 동일한 위치인지 여부를 물어 본다.
   motor_axis(6,60,40,18,1124);
@@ -257,21 +238,14 @@ void loop() {
   }
   delay(1000);
 
-
-
   //레일 앞에서 앞으로 이동하기 위해 앞바퀴를 레일에 맞추어 들어갈 준비를 한다.
   motor_axis(6,150,40,18,100);
-
 
   dxl.setGoalVelocity(18, 0);
   delay(2000);
 
-
-
-
   //레일 앞에서 앞으로 이동하기 위해 뒷바퀴를 레일에 맞추어 들어갈 준비를 한다.
   motor_axis(2,150,40,4,100);
-
 
   dxl.setGoalVelocity(4, 0);
   delay(2000);
@@ -301,16 +275,12 @@ void loop() {
       }
     }
   }
-
-
-
   //----------------------------------------------------------------------------------------------------
   //------------------------------------------처음 이동 끝----------------------------------------------
   //----------------------------------------------------------------------------------------------------
 
   start_check = 0;
   while (move_end_check != 1) {
-
 
     static int text;
     static long int time = 0;
@@ -322,12 +292,7 @@ void loop() {
     static int save_speed_ID = 1;
     static int save_stop_ID = 7;
 
-
     static long int time_check = 0;
-
-
-
-
 
     if (find != 1) {
       if (start_check == 0) {
@@ -347,7 +312,6 @@ void loop() {
         DEBUG_SERIAL.print(",");
         DEBUG_SERIAL.println(motor_speed);
       }
-
 
       if (millis() - time_check >= 16000) {
         if (1.1 <= cm && cm <= 4) {
@@ -523,35 +487,16 @@ void loop() {
           }
 
           //각각 모터의 각도를 옆으로 이동하기 위해 세팅하는 코드
-          huskylens_check = 0;
-
-          static bool right_setting_check = 0;
-
-
-
-          static bool left_setting_check = 0;
-
-          bool start_time_check = 0;
-
-          long long int start_time = 0;
-
-          int set_degree = 60;
 
           delay(1000);
           motor_axis(6, 60, 1074, 18, 1224);
-          
-
-
-
 
           start_time_check = false;
           set_degree = 60;
 
-
           delay(1000);
           motor_axis(2, 60,50 , 4, 1174);
           
-
           delay(2000);
           //허스키 렌즈 가 인식 될때까지 계속 이동
           while (huskylens_check != 1) {
